@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <div class="main">
+      <h1>Counter</h1>
+      <div class="Visit-counter">
+        <h2>Count: {{session["counter"] }}</h2>
+        <h2>Actual visits : {{session["act_visits"] }}</h2>
+        <div class="button-holder">
+          <a class="btn" href="/counter/1"> add visit</a>
+          <a class="btn" href="/counter/2"> add 2 visits</a>
+          <form action="add_count" method="post">
+            <input
+              type="number"
+              name="count"
+              id="count"
+              placeholder="enter custom number of counts"
+            />
+            <input class="btn" type="submit" value="Add count" />
+          </form>
+          <a class="btn btn-reset" href="/destroy_session"> reset</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

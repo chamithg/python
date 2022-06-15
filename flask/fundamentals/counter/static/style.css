@@ -1,0 +1,50 @@
+h1 {
+  color: red;
+  text-align: center;
+  font-size: 5rem;
+}
+h2 {
+  font-size: 3rem;
+  text-align: center;
+}
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 5rem 0;
+  background-color: antiquewhite;
+  border: 5px solid rebeccapurple;
+  width: 50vw;
+  margin: auto;
+}
+
+.btn {
+  background-color: rgb(46, 196, 46);
+  text-decoration: none;
+  border: 2px solid green;
+  width: 5rem;
+  height: 3rem;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  margin: 1rem;
+}
+
+form {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#count {
+  width: 12rem;
+  height: 2rem;
+  border: none;
+}
+.button-holder {
+  text-align: center;
+}
+.btn-reset {
+  background-color: red;
+}

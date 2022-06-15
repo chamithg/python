@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    th,
+    td {
+      height: 3rem;
+      padding: 0.5rem;
+      width: 10rem;
+      text-align: left;
+      border: 2px solid black;
+    }
+
+    th {
+      background-color: antiquewhite;
+    }
+    td {
+      background-color: thistle;
+    }
+  </style>
+  <body>
+    <h1 style="text-align: center">HTML Table</h1>
+    <div
+      style="
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin-left: 1rem;
+        align-items: center;
+        font-size: 1.5rem;
+      "
+    >
+      <table>
+        <thead>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Full Name</th>
+        </thead>
+        {%for user in users%}
+        <tbody>
+          <td>{{user["first_name"]}}</td>
+          <td>{{user["last_name"]}}</td>
+          <td>{{user["first_name"] +" "+ user["last_name"]}}</td>
+        </tbody>
+        {%endfor%}
+      </table>
+    </div>
+  </body>
+</html>

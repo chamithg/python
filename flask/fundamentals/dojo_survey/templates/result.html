@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <div class="main">
+      <div class="section_center">
+        <h1>Submitted info</h1>
+        <h3>Name: {{session["name"]}}</h3>
+        <h3>Dojo Location: {{session["location"]}}</h3>
+        <h3>Favourite Language: {{session["languages"]}}</h3>
+        <h3>Comments:</h3>
+        <p>{{session["comments"]}}</p>
+        <a href="/go_back">Go back</a>
+      </div>
+    </div>
+  </body>
+</html>
