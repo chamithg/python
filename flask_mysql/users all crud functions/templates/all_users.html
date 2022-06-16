@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        margin-left: 5rem;
+      }
+      td,
+      th {
+        padding: 0.8rem;
+        font-size: 2rem;
+        border: 2px solid rgb(90, 88, 88);
+      }
+      table {
+        margin: 1rem 0;
+      }
+      thead {
+        background-color: azure;
+      }
+      tbody {
+        background-color: aliceblue;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>All Users</h1>
+    <table>
+      <thead>
+        <th>ID</th>
+        <th>Full Name</th>
+        <th>Email</th>
+        <th>Created at</th>
+        <th>Actions</th>
+      </thead>
+      <tbody>
+        {%for user in users%}
+        <tr>
+          <td>{{user.id}}</td>
+          <td>{{user.full_name}}</td>
+          <td>{{user.email}}</td>
+          <td>{{user.created_at}}</td>
+          <td>
+            <a href="/show/{{user.id}}"> Show</a>
+            <a href="/edit/{{user.id}}"> Edit</a>
+            <a href="/delete/{{user.id}}"> Delete</a>
+          </td>
+        </tr>
+        {%endfor%}
+      </tbody>
+    </table>
+    <a href="/new"> add a new user</a>
+  </body>
+</html>
