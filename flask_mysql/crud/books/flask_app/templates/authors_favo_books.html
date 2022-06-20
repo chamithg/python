@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- CSS only -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container m-5">
+      <div class="row">
+        <div class="col m-5">
+          <h1>{{author.full_name}}</h1>
+          <br />
+          <h2>Favourite Books</h2>
+          <br />
+          {%for book in author.favorite_books%}
+          <p>{{book.title}}</p>
+          {%endfor%}
+        </div>
+        <div class="col m-5">
+          <h2>Select Favourite Books:</h2>
+          <br />
+          <form action="/author/{{author.id}}/join_books" method="post">
+            <select
+              class="form-select"
+              name="book_id"
+              aria-label="Default select example"
+            >
+              {%for unf_book in author.un_favorite_books%}
+              <option name="book_id" value="{{unf_book.id}}">
+                {{unf_book.title}}
+              </option>
+              {%endfor%}</select
+            ><br />
+            <button type="submit" class="btn btn-primary">
+              Add to authors favourite
+            </button>
+            <br />
+            <br />
+            <a href="/" class="btn btn-warning"> Home</a>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
