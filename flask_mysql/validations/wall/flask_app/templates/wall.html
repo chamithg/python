@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- CSS only -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='style_wall.css') }}"
+    />
+  </head>
+  <body>
+    <div class="main">
+      <div class="title">
+        <div>
+          <h1>Coding Dojo Wall</h1>
+        </div>
+        <div>
+          <h1>
+            Hello, {{logged_user.first_name}}
+            <span>
+              <a href="/logout" class="btn btn-danger"> logout</a>
+            </span>
+          </h1>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <h2>{{rec_msg_count}} New Message(s) for you</h2>
+            <div class="rec_msg_area">
+              {%for msg in msgs_to_display%}
+              <div class="rec_msg position-relative">
+                <h3>From <span>{{msg.sender}}</span></h3>
+                <p>{{msg.rec_msg}}</p>
+                <a
+                  href="/delete/{{msg.id}}"
+                  class="btn btn-danger position-absolute bottom-0 end-0 m-1"
+                  style="border-radius: 1rem"
+                >
+                  Delete</a
+                >
+              </div>
+              {%endfor%}
+            </div>
+          </div>
+          <div class="col">
+            <h2>Send Messages</h2>
+            <h3 style="color: rgb(187, 187, 4)">
+              you have sent {{sent_msg_count}} message(s) so far
+            </h3>
+            <div class="msg_area">
+              <div>
+                {% with messages = get_flashed_messages() %} {% if messages %}
+                {% for message in messages %}
+                <p
+                  style="
+                    color: rgb(197, 45, 45);
+                    background-color: rgb(189, 118, 118);
+                    border-radius: 1rem;
+                    padding: 2rem;
+                    border: 5px solid rgb(181, 75, 75);
+                  "
+                >
+                  {{message}}
+                </p>
+                {% endfor %} {% endif %} {% endwith %}
+              </div>
+              {%for user in users%} {%if user.email != logged_user.email%}
+              <form
+                class="msg-from"
+                action="/send_msg/{{user.id}}"
+                method="post"
+              >
+                Message {{user.first_name}}: <br />
+                <textarea name="msg_content" cols="55" rows="4"></textarea
+                ><br />
+                <input
+                  type="submit"
+                  value="Send"
+                  class="btn btn-success"
+                  style="border-radius: 1rem"
+                />
+                <input
+                  type="hidden"
+                  name="sender"
+                  value="{{logged_user.first_name}}"
+                />
+              </form>
+              {%endif%} {%endfor%}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- JavaScript Bundle with Popper -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

@@ -1,0 +1,68 @@
+body {
+  display: flex;
+  justify-content: center;
+  margin: 2rem;
+  background-color: rgb(33, 26, 26);
+}
+
+.main {
+  width: 90vw;
+  background-color: rgb(230, 233, 236);
+}
+.title {
+  display: flex;
+  justify-content: space-between;
+  padding: 2rem 5rem;
+}
+h2 {
+  color: rgb(218, 98, 55);
+  text-align: center;
+}
+h3 {
+  color: rgb(2, 89, 85);
+}
+p {
+  color: rgb(8, 14, 71);
+}
+.rec_msg {
+  background-color: rgb(60, 219, 116);
+  background: linear-gradient(
+      217deg,
+      rgba(174, 255, 0, 0.8),
+      rgba(216, 223, 4, 0) 70.71%
+    ),
+    linear-gradient(127deg, rgba(5, 230, 5, 0.8), rgba(0, 255, 0, 0) 70.71%),
+    linear-gradient(336deg, rgba(200, 230, 1, 0.926), rgba(0, 0, 255, 0) 70.71%);
+  border-radius: 1rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+.row {
+  height: 80vh;
+  width: 90vw;
+  margin-bottom: 1rem;
+}
+.container {
+  display: flex;
+  justify-content: space-between;
+  width: 90vw;
+}
+.col {
+  background-color: rgb(12, 45, 74);
+  color: azure;
+  width: 40vw;
+  margin: 1rem;
+  border: 1rem solid rgb(32, 30, 71);
+  border-radius: 1rem;
+  height: 75vh;
+  overflow-y: scroll;
+}
+
+.msg-from {
+  margin-bottom: 1.5rem;
+}
+.msg-from textarea {
+  border-radius: 1rem;
+  margin: 0.5rem 0;
+  padding: 1rem;
+}
