@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- CSS only -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='style_wall.css') }}"
+    />
+  </head>
+  <body>
+    <div class="row">
+      <div class="col"><h1>Edit Recipe</h1></div>
+      <div class="col">
+        <div class="position-absolute top-0 end-0">
+          <a href="/dashboard" class="btn btn-warning m-1">Dashboard</a>
+          <a href="/logout" class="btn btn-danger m-1">Logout</a>
+        </div>
+      </div>
+    </div>
+      {% with messages = get_flashed_messages() %} {% if messages %} {% for
+      message in messages %}
+      <p style="color: rgb(197, 45, 45)">{{message}}</p>
+      {% endfor %} {% endif %} {% endwith %}
+    <form class = "form m-5" action="/update/{{recipe.id}}/{{session['id']}}" method="post">
+        Name: <br />
+        <input type="text" class="form_control" name="name" value={{recipe.name}} /><br />
+        Description: <br />
+        <input type="text" class="form_control" name="description" value= {{recipe.description}}/><br />
+        Instructions: <br />
+        <textarea name="instructions"class="form_control" id="" cols="30" rows="10" >{{recipe.instructions}}</textarea><br>
+        
+        Date Made on: <br />
+        <input type="date" class="form_control" name="date" value={{recipe.date}}/><br />
+        <br />
+        <div id="wrapper">
+        <label for="yes_no_radio">Under Thirty minutes?</label>
+        {%if  recipe.under_thirty == 1 %}
+        <p>
+        <input type="radio" name="under_thirty" value="yes" checked>Yes</input>
+        </p>
+        <p>
+        <input type="radio" name="under_thirty" value="no" >No</input>
+        </p>
+
+        {%else%}
+        <p>
+        <input type="radio" name="under_thirty" value="yes" >Yes</input>
+        </p>
+        <p>
+        <input type="radio" name="under_thirty" value="no" checked>No</input>
+        </p>
+
+        {%endif%}
+        
+        <br /><br />
+        <input type="submit" value="Update" class="btn btn-success" />
+    </form>
+    <!-- JavaScript Bundle with Popper -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
