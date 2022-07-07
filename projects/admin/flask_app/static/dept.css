@@ -12,6 +12,7 @@
   --clr-primary-8: hsl(208, 74%, 52%);
   --clr-primary-9: hsl(185, 94%, 87%);
   --clr-primary-10: hsl(186, 52%, 45%);
+  --clr-primary-11: hsl(211, 77%, 73%);
   /* darkest grey - used for headings */
   --clr-grey-1: hsl(244, 100%, 14%);
   --clr-grey-2: hsl(211, 98%, 19%);
@@ -208,6 +209,10 @@ span {
   padding: 1.5rem;
   color: var(--clr-grey-5);
   min-height: 400px;
+}
+
+.alerts {
+  background: linear-gradient(135deg, orange, yellow 20%, cyan);
 }
 
 /* @media screen and (min-width: 992px); */

@@ -27,6 +27,8 @@ class Item:
         self.cat_name = data["cat_name"]
         self.dept_id = data["dept_id"]
         self.dept_name = data["dept_name"]
+        self.sales_plan = data["sales_plan"]
+        self.flag_by = data["flag_by"]
         
         
         
@@ -41,6 +43,17 @@ class Item:
     @classmethod
     def get_all_items(cls):
         query = "SELECT * FROM  inventory LEFT JOIN sales ON sales.inv_id = inventory.id LEFT JOIN  categories ON categories.id = inventory.cat_id LEFT JOIN  departments ON departments.id = categories.dept_id;"
+        results = connectToMySQL('lucky_mart_schema').query_db(query)
+        items =[]
+        if results:
+            for item in results:
+                items.append(cls(item))
+    
+        return items
+    
+    @classmethod
+    def get_marked_items(cls):
+        query = "SELECT * FROM  inventory LEFT JOIN sales ON sales.inv_id = inventory.id LEFT JOIN  categories ON categories.id = inventory.cat_id LEFT JOIN  departments ON departments.id = categories.dept_id WHERE flag_by IS NOT NULL;"
         results = connectToMySQL('lucky_mart_schema').query_db(query)
         items =[]
         if results:

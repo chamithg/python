@@ -49,9 +49,7 @@ def edit_sales():
         "nxt_week_sale_proj":request.form["nxt_week_sale_proj"],
         "nxt_week_target":request.form["nxt_week_target"],
         "nxt_week_shrink_proj":request.form["nxt_week_shrink_proj"],
-        "nxt_week_shrink_target":request.form["nxt_week_shrink_target"],
-        
-        
+        "nxt_week_shrink_target":request.form["nxt_week_shrink_target"],        
     }
     Item.edit_sales(request.form)
     return redirect ("/inventory") 
@@ -68,5 +66,11 @@ def unmark_item(id):
     data={"id":id }
     Item.unmark_item(data)
     return redirect(request.referrer)
+    
+@app.route("/sales_plans")
+def sales_plan():
+    depts = All_dept.all_depts()
+    items = Item.get_marked_items()
+    return render_template("sales_plan.html", items = items, depts = depts)
     
     

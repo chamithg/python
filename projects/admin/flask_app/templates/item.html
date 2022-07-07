@@ -17,7 +17,7 @@
     <link
       rel="stylesheet"
       type="text/css"
-      href="{{ url_for('static', filename='dept.css') }}"
+      href="{{ url_for('static', filename='item.css') }}"
     />
   </head>
   <body class="body">
@@ -36,7 +36,7 @@
     </div>
     <div class="main">
       <h1 class="p-5"><span> Itemized sales perfomance</span></h1>
-      <div class="col_2 p-5 md-2">
+      <div class="col_2 p-5 md-2 alerts">
         <div class="row">
           <h3>Actions Needed:</h3>
           <br>
@@ -121,7 +121,11 @@
             <li><h4> Shrink (Last Week): {{item.prev_week_shrink}} UNITS</h4></li>
             <li><h4> Shrink Target-Bellow (Last Week):{{item.prev_week_shrink_target}} UNITS</h4></li>
             <br>
+            {%if item.flag_by%}
+            <li><h4>Sales (Next Week) <input type="number" value={{item.nxt_week_sale_proj}} ></h4></li>
+            {%else%}
             <li><h4> Sales (Next Week): {{item.nxt_week_sale_proj}}UNITS</h4></li>
+            {%endif%}
             <li><h4> Sales Target (Next Week):{{item.nxt_week_target}} UNITS</h4></li>
             <li><h4> Shrink (Next Week):{{item.nxt_week_shrink_proj}} UNITS</h4></li>
             <li><h4> Shrink Target-Bellow (Next Week): {{item.nxt_week_shrink_target}}UNITS</h4></li>   
@@ -131,6 +135,10 @@
 
             </div>
             <div class="col">
+              {%if item.sales_plan != none%}
+              <h4>Sales plan for next week</h4>
+              <p>{{item.sales_plan}}</p>
+              {%endif%}
               <div class="chart-containe m-5">
 
                   <canvas
@@ -139,9 +147,21 @@
               </div>
             </div>
           </div>
+          <td>{%if item.flag_by%}
+              <p class="text-info" >marked by {{session["flag_code"]}}</p>
+              {%if item.flag_by == session["flag_code"]%}
+              <a class="text-danger btn btn-warning"href="/unmark_item/{{item.id}}">Unmark Item</a>
+              {%endif%}
+              {%else%}
+              <a href="/mark_item/{{item.id}}">Mark Item and Manage sales</a>
+              {%endif%}
+            </td>
+
+          <a href="/mark_item/{{item.id}}" class="btn ">Mark Item and Manage sales</a>
           
           
         </div>
+
       </div>
       
       
@@ -150,45 +170,49 @@
 
     <script>
       const item_total_js = JSON.parse({{ item_total_js | tojson}});
-      console.log(item_total_js['total_prev_sales'])
-     
       
       const labels = ["Previous week","next week"];
       const data = {
         labels: labels,
         datasets: [
           {
-            label: 'Dataset 1',
-            data: [item_total_js.total_prev_sales,item_total_js.total_nxt_sales],
-            borderColor: 'hsl(54, 73%, 51%)',
-            backgroundColor: 'hsl(54, 73%, 51%)',
-            type: 'bar'
+            label: 'Sales',
+            data: [item_total_js.total_prev_sales,item_total_js.total_nxt_sales_proj],
+            borderColor: 'hsl(244, 100%, 14%)',
+            backgroundColor: 'hsl(244, 100%, 14% ,78%)',
+            type: 'bar',
+            order: 1
             
           },
-          
+
           {
-            label: 'Dataset 3',
-            data: [item_total_js.total_sales_target,item_total_js.total_nxt_sales_target],
-            borderColor:'hsl(54, 73%, 51%)',
-            backgroundColor: 'hsl(54, 73%, 51%)',
-            stack: 'combined',
-            stepped: "middle"
-            
-          },
-          {
-            label: 'Dataset 2',
+            label: 'Shrink',
             data: [item_total_js.total_prev_shrink,item_total_js.total_nxt_shrink_proj],
-            borderColor: 'hsl(54, 73%, 51%)',
-            backgroundColor: 'hsl(54, 73%, 51%)',
-            type: 'bar'
+            borderColor: 'hsl(0, 75%, 54%)',
+            backgroundColor: 'hsl(0, 75%, 54% ,75%)',
+            type: 'bar',
+            order: 1
+          },
+
+          {
+            label: 'Sales Target',
+            data: [item_total_js.total_prev_sales_target,item_total_js.total_nxt_sales_target],
+            borderColor:'hsl(196, 96%, 33%)',
+            backgroundColor: 'hsl(196, 96%, 33% ,50%)',
+            stack: 'combined',
+            
+            order: 0
+            
+
           },
           {
-            label: 'Dataset 4',
-            data: [item_total_js.total_shrink_target,item_total_js.total_nxt_shrink_target],
+            label: 'Shrink Target',
+            data: [item_total_js.total_prev_shrink_target,item_total_js.total_nxt_shrink_target],
             borderColor:'hsl(54, 73%, 51%)',
             backgroundColor: 'hsl(54, 73%, 51%)',
             stack: 'combined',
-            stepped: "middle"
+            order: 0
+            
           }
         ]
       };
@@ -210,6 +234,11 @@
                 plugins: {
                   title: {
                     display: true,
+                    text:"Sales/ Shrink position vs Targets ($)",
+                    font:{
+
+                      size:25
+                    }
                   }
                 },
                 scales: {

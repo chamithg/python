@@ -233,13 +233,4 @@ span {
   overflow: auto;
 }
 
-.alerts {
-  background: linear-gradient(
-    135deg,
-    rgb(11, 93, 106),
-    rgb(2, 185, 185) 20%,
-    rgb(0, 255, 140)
-  );
-}
-
 /* @media screen and (min-width: 992px); */

@@ -60,5 +60,6 @@ def display_single_item(id):
     item_total = Dept.get_totals_single({"id":id})
     item_total_js = Dept.get_totals_js( Dept.get_totals_single({"id":id}))
     item = Item.get_single_item({"id":id})
+    print(item_total_js)
     
-    return render_template("item.html", item_total = item_total, item_total_js = item_total_js, item = item)
+    return render_template("item.html", item_total = item_total, item_total_js = json.dumps(item_total_js), item = item)

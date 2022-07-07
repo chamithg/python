@@ -44,18 +44,18 @@
         </h3>
       </div>
       <div class="section-center row">
-        <div class="col col_1">
+        <div class="col col_1 alerts">
           <h4 class="fw-bold mb-3"><u> stock in hand</u></h4>
           <h4>cost: {{ "${:,.2f}".format(totals.cost_stock_in_hand) }}</h4>
           <h4>Sales Value: {{ "${:,.2f}".format(totals.sales_stock_in_hand) }}</h4>
           <h4 step="100">
         </div>
-      <div class="col col_1">
+      <div class="col col_1 alerts">
         <h4 class="fw-bold mb-3"><u> Daily Avg:</u></h4>
         <h4>Sales: {{ "${:,.2f}".format(totals.total_prev_sales/7) }}</h4>
         <h4>Income: {{ "${:,.2f}".format((totals.total_prev_sales- totals.total_prev_cost)/7) }}</h4>
       </div>
-      <div class="col col_1">
+      <div class="col col_1 alerts">
         <h4 class="fw-bold mb-3"><u> Ratio:</u></h4>
         <h4>Income to Sales: {{ "{:,.2f}%".format((totals.total_prev_sales- totals.total_prev_cost)/totals.total_prev_sales*100) }}</h4>
         <h4>Shrink to Sales: {{ "{:,.2f}%".format(totals.total_prev_shrink/totals.total_prev_sales*100) }}</h4>
@@ -113,6 +113,8 @@
             var dairy_totals_js = JSON.parse({{ dairy_totals_js | tojson}});
             var bakery_totals_js = JSON.parse({{ bakery_totals_js | tojson}});
             var frozen_totals_js = JSON.parse({{ frozen_totals_js | tojson}});
+
+         
             
             // chart 1   doughnut---->
             var data = [totals_js.total_prev_cost,totals_js.total_prev_income, totals_js.total_prev_shrink];

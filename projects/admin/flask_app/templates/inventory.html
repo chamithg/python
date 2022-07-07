@@ -93,11 +93,11 @@
           <th style="max-width: 25px; overflow:hidden">item old price ($)</th>
           <th style="max-width: 25px; overflow:hidden">item current price ($)</th>
           <th style="max-width: 20px; overflow:hidden">Prev. week sales</th>
-          <th style="max-width: 20px; overflow:hidden">Prev. sales target (below)</th>
+          <th style="max-width: 20px; overflow:hidden">Prev. sales target</th>
           <th style="max-width: 20px; overflow:hidden">Prev. week shrink</th>
           <th style="max-width: 20px; overflow:hidden">Prev. shrink target (below)</th>
           <th style="max-width: 20px; overflow:hidden">Next. week sales (proj:)</th>
-          <th style="max-width: 20px; overflow:hidden">Next. sales target (below)</th>
+          <th style="max-width: 20px; overflow:hidden">Next. sales target</th>
           <th style="max-width: 20px; overflow:hidden">Next. week shrink (proj:)</th>
           <th style="max-width: 20px; overflow:hidden">Next. shrink target (below)</th>
           <th>actions</th>
@@ -125,12 +125,12 @@
             <td>{%if item.flag_by%}
               <p class="text-info" >marked by {{session["flag_code"]}}</p>
               {%if item.flag_by == session["flag_code"]%}
-              <a class="text-danger"href="/unmark_item/{{item.id}}">Unmark Item</a>
+              <a class="text-danger btn btn-warning"href="/unmark_item/{{item.id}}">Unmark Item</a>
               {%endif%}
               {%else%}
               <a href="/mark_item/{{item.id}}">Mark Item</a>
               {%endif%}
-              </td>
+            </td>
           </tr>
 
           {%endfor%}
