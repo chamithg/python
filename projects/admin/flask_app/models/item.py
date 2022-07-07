@@ -52,16 +52,54 @@ class Item:
     
     @classmethod
     def get_single_item(cls,data):
-        query = "SELECT * FROM inventory WHERE id = %(id)s;"
+        query = "SELECT * FROM  inventory LEFT JOIN sales ON sales.inv_id = inventory.id LEFT JOIN  categories ON categories.id = inventory.cat_id LEFT JOIN  departments ON departments.id = categories.dept_id WHERE inventory.id = %(id)s;"
         results = connectToMySQL('lucky_mart_schema').query_db(query,data)
         items =[]
         if results:
             for item in results:
                 items.append(cls(item))
                 return items[0]
+    
+    @classmethod
+    def get_all_items_dept(cls,data):
+        query = "SELECT * FROM  inventory LEFT JOIN sales ON sales.inv_id = inventory.id LEFT JOIN  categories ON categories.id = inventory.cat_id LEFT JOIN  departments ON departments.id = categories.dept_id WHERE dept_id = %(dept_id)s;"
+        results = connectToMySQL('lucky_mart_schema').query_db(query,data)
+        items =[]
+        if results:
+            for item in results:
+                items.append(cls(item))
+    
+        return items
+    
+    @classmethod
+    def get_all_items_cat(cls,data):
+        query = "SELECT * FROM  inventory LEFT JOIN sales ON sales.inv_id = inventory.id LEFT JOIN  categories ON categories.id = inventory.cat_id LEFT JOIN  departments ON departments.id = categories.dept_id WHERE cat_id = %(cat_id)s;"
+        results = connectToMySQL('lucky_mart_schema').query_db(query,data)
+        items =[]
+        if results:
+            for item in results:
+                items.append(cls(item))
+    
+        return items        
+            
+
             
     @classmethod
     def edit_sales(cls,data):
         query = "INSERT INTO sales (prev_week_sale, prev_week_target, prev_week_shrink, prev_week_shrink_target, nxt_week_sale_proj, nxt_week_target, nxt_week_shrink_proj, nxt_week_shrink_target,inv_id) VALUES (%(prev_week_sale)s, %(prev_week_target)s, %(prev_week_shrink)s, %(prev_week_shrink_target)s, %(nxt_week_sale_proj)s, %(nxt_week_target)s, %(nxt_week_shrink_proj)s, %(nxt_week_shrink_target)s,%(inv_id)s);"
         results = connectToMySQL('lucky_mart_schema').query_db(query,data)
         return results
+    
+    
+    @classmethod
+    def mark_item(cls,data):
+        query = "UPDATE inventory SET flag_by = %(flag_code)s WHERE id = %(id)s;"
+        return connectToMySQL('lucky_mart_schema').query_db(query,data)
+        
+    
+    @classmethod
+    def unmark_item(cls,data):
+        query = "UPDATE inventory SET flag_by = NULL WHERE id = %(id)s;"
+        return connectToMySQL('lucky_mart_schema').query_db(query,data)
+        
+    

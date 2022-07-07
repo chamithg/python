@@ -18,57 +18,125 @@
       href="{{ url_for('static', filename='style_wall.css') }}"
     />
   </head>
-  <body>
-    <h1>inventory</h1>
-    <!-- JavaScript Bundle with Popper -->
-    <table class="table table-bordered m-5">
-      <thead>
-        <th style="max-width: 20px">item id</th>
-        <th>item decs</th>
-        <th style="max-width: 25px">category</th>
-        <th style="max-width: 25px">department</th>
-        <th style="max-width: 20px">item count</th>
-        <th style="max-width: 25px">item cost ($)</th>
-        <th style="max-width: 25px">item old price ($)</th>
-        <th style="max-width: 25px">item current price ($)</th>
-        <th style="max-width: 20px">Prev. week sales</th>
-        <th style="max-width: 20px">Prev. sales target (below)</th>
-        <th style="max-width: 20px">Prev. week shrink</th>
-        <th style="max-width: 20px">Prev. shrink target (below)</th>
-        <th style="max-width: 20px">Next. week sales (proj:)</th>
-        <th style="max-width: 20px">Next. sales target (below)</th>
-        <th style="max-width: 20px">Next. week shrink (proj:)</th>
-        <th style="max-width: 20px">Next. shrink target (below)</th>
-        <th>actions</th>
-      </thead>
-      <tbody>
-        {%for item in items%}
-        <tr>
-          <td>{{item.id}}</td>
-          <td>{{item.item_desc}}</td>
-          <td>
-            <a href="/inventory/cat/{{item.cat_id}}">{{item.cat_name}}</a>
-          </td>
-          <td><a href="/inventory/{{item.dept_id}}">{{item.dept_name}}</a></td>
-          <td>{{item.item_count}}</td>
-          <td>{{item.cost_old}}</td>
-          <td>{{item.unit_price_old}}</td>
-          <td>{{item.unit_price_new}}</td>
-          <td>{{item.prev_week_sale}}</td>
-          <td>{{item.prev_week_target}}</td>
-          <td>{{item.prev_week_shrink}}</td>
-          <td>{{item.prev_week_shrink_target}}</td>
-          <td>{{item.nxt_week_sale_proj}}</td>
-          <td>{{item.nxt_week_target}}</td>
-          <td>{{item.nxt_week_shrink_proj}}</td>
-          <td>{{item.nxt_week_shrink_target}}</td>
+  <body class="body">
+    <div class="nav">
+      <li><a href="/dashboard">Home</a></li>
+      <br />
+      <li><a href="/inventory">Inventory</a></li>
+      <br />
+      <li><a href="/departments">Departments</a></li>
+      <br />
+      <li><a href="/targets">Targets</a></li>
+      <br />
+      <li><a href="/sales_plans">Sales Plans</a></li>
+      <br />
+      <li><a href="/logout">Logout</a></li>
+    </div>
+    <div class="main md-2">
+      <h1 class="p-5"><span> Inventory</span></h1>
+      <div>
+        <select
+          class="form-select w-25 ms-5"
+          aria-label="Default select example"
+          onchange="location = this.value;"
+        >
+          {%if dept_id%}
+          <option value="/inventory/dept/{{depts.id}}">
+            {{depts.dept_name}}
+          </option>
+          {%else%}
+          <option selected>--Select Department--</option>
+          {%for dept in depts%}
+          <option value="/inventory/dept/{{dept.id}}">
+            {{dept.dept_name}}
+          </option>
+          {%endfor%} {%endif%}
+        </select>
+        <br />
+        <a href="/inventory" class="btn btn-warning ms-5 mb-3">all depts</a>
+        {%if dept_id%}
 
-          <td><a href="add_sales/{{item.id}}">add sales</a></td>
-        </tr>
+        <select
+          class="form-select w-25 ms-5"
+          aria-label="Default select example"
+          onchange="location = this.value;"
+        >
+          {%if cat_id%}
+          <option value="/inventory/dept/{{dept_id}}/{{cats.id}}">
+            {{cats.cat_name}}
+          </option>
+          {%else%}
+          <option selected>-- filter by category --</option>
+          {%for cat in cats%}
+          <option value="/inventory/dept/{{dept_id}}/{{cat.id}}">
+            {{cat.cat_name}}
+          </option>
+          {%endfor%} {%endif%}
+        </select>
+        <br />
+        <a href="/inventory/dept/{{dept_id}}" class="btn btn-warning ms-5 mb-5"
+          >all selected department categories</a
+        >
+        {%endif%}
+      </div>
+      <!-- JavaScript Bundle with Popper -->
+      <table
+        class="table table-bordered m-5 table-striped table-hover table-light "
+      >
+        <thead style=" position: sticky; top: 0;">
+          <th style="max-width: 20px; overflow:hidden">item id</th>
+          <th style="max-width: 25px; overflow:hidden">item decs</th>
+          <th style="max-width: 25px; overflow:hidden">category</th>
+          <th style="max-width: 25px; overflow:hidden">department</th>
+          <th style="max-width: 20px; overflow:hidden">item count</th>
+          <th style="max-width: 25px; overflow:hidden">item cost ($)</th>
+          <th style="max-width: 25px; overflow:hidden">item old price ($)</th>
+          <th style="max-width: 25px; overflow:hidden">item current price ($)</th>
+          <th style="max-width: 20px; overflow:hidden">Prev. week sales</th>
+          <th style="max-width: 20px; overflow:hidden">Prev. sales target (below)</th>
+          <th style="max-width: 20px; overflow:hidden">Prev. week shrink</th>
+          <th style="max-width: 20px; overflow:hidden">Prev. shrink target (below)</th>
+          <th style="max-width: 20px; overflow:hidden">Next. week sales (proj:)</th>
+          <th style="max-width: 20px; overflow:hidden">Next. sales target (below)</th>
+          <th style="max-width: 20px; overflow:hidden">Next. week shrink (proj:)</th>
+          <th style="max-width: 20px; overflow:hidden">Next. shrink target (below)</th>
+          <th>actions</th>
+        </thead>
+        <tbody>
+          {%for item in items%}
+          <tr style="font-weight:{{ "bold" if item.flag_by else "none" }};">
+            <td>{{item.id}}</td>
+            <td><a href="/view_item/{{item.id}}">{{item.item_desc}}</a> </td>
+            <td>{{item.cat_name}}</td>
+            <td>{{item.dept_name}}</td>
+            <td>{{item.item_count}}</td>
+            <td>{{"$ {:,.2f}".format(item.cost_old)}}</td>
+            <td>{{"$ {:,.2f}".format(item.unit_price_old)}}</td>
+            <td>{{"$ {:,.2f}".format(item.unit_price_new)}}</td>
+            <td style="color:{{ "red" if item.prev_week_sale< item.prev_week_target else "none" }}">{{item.prev_week_sale}}</td>
+            <td>{{item.prev_week_target}}</td>
+            <td style="color:{{ "red" if item.prev_week_shrink_target< item.prev_week_shrink else "none" }}">{{item.prev_week_shrink}}</td>
+            <td>{{item.prev_week_shrink_target}}</td>
+            <td style="color:{{ "red" if item.nxt_week_sale_proj< item.nxt_week_target else "none" }}">{{item.nxt_week_sale_proj}}</td>
+            <td>{{item.nxt_week_target}}</td>
+            <td style="color:{{ "red" if item.nxt_week_shrink_target< item.nxt_week_shrink_proj else "none" }}">{{item.nxt_week_shrink_proj}}</td>
+            <td>{{item.nxt_week_shrink_target}}</td>
 
-        {%endfor%}
-      </tbody>
-    </table>
+            <td>{%if item.flag_by%}
+              <p class="text-info" >marked by {{session["flag_code"]}}</p>
+              {%if item.flag_by == session["flag_code"]%}
+              <a class="text-danger"href="/unmark_item/{{item.id}}">Unmark Item</a>
+              {%endif%}
+              {%else%}
+              <a href="/mark_item/{{item.id}}">Mark Item</a>
+              {%endif%}
+              </td>
+          </tr>
+
+          {%endfor%}
+        </tbody>
+      </table>
+    </div>
 
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"

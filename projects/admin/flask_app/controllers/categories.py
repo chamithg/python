@@ -14,3 +14,9 @@ def display_category(cat_id):
     items = Category.get_totals_cat(data)
     return render_template("inventory.html", items = items) 
 
+@app.route("/dashbord/cat/<int:cat_id>")
+def get_cat_totals(cat_id):
+    data = {"cat_id": cat_id}
+    items = Category.get_totals_cat(data)
+    return render_template("category.html", items = items) 
+
